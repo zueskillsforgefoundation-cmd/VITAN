@@ -1,0 +1,2210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VITAN - Premium Fashion House | Luxury Clothing & Accessories</title>
+    <style>
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #d4af37;
+            --accent: #f5f5f5;
+            --text: #333;
+            --light-gray: #f8f8f8;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            overflow-x: hidden;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-text {
+            font-size: 3rem;
+            color: var(--secondary);
+            letter-spacing: 10px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 30px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: 5px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            transform: scale(1.1);
+            color: var(--secondary);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--secondary);
+            color: var(--primary);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            opacity: 0;
+            animation: fadeIn 0.6s forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { filter: hue-rotate(0deg); }
+            50% { filter: hue-rotate(20deg); }
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--secondary);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            25% { transform: translateY(-100px) translateX(50px); }
+            50% { transform: translateY(-200px) translateX(-50px); }
+            75% { transform: translateY(-100px) translateX(100px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #fff;
+            padding: 2rem;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            margin-bottom: 1rem;
+            letter-spacing: 8px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #fff, var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin-bottom: 3rem;
+            color: var(--secondary);
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+
+        .cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            padding: 1.2rem 3rem;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            letter-spacing: 2px;
+        }
+
+        .cta-btn.primary {
+            background: var(--secondary);
+            color: var(--primary);
+        }
+
+        .cta-btn.primary:hover {
+            background: transparent;
+            border-color: var(--secondary);
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+        }
+
+        .cta-btn.secondary {
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+        }
+
+        .cta-btn.secondary:hover {
+            background: #fff;
+            color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-20px); }
+        }
+
+        .scroll-indicator span {
+            color: var(--secondary);
+            font-size: 2rem;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            animation: fadeIn 1s;
+        }
+
+        .section-subtitle {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: var(--primary);
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            max-width: 700px;
+            margin: 0 auto;
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Products Section */
+        .products-section {
+            background: var(--light-gray);
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--secondary);
+            color: var(--primary);
+            border-color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: #fff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--secondary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .product-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            padding: 1.5rem;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .product-card:hover .product-overlay {
+            transform: translateY(0);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .action-btn {
+            background: #fff;
+            color: var(--primary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            color: var(--secondary);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: var(--secondary);
+        }
+
+        .rating-count {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .product-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .add-to-cart {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .add-to-cart:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* Collection Showcase */
+        .collection-showcase {
+            background: var(--primary);
+            color: #fff;
+            padding: 8rem 5%;
+        }
+
+        .collection-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .collection-item {
+            position: relative;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .collection-item:hover {
+            transform: scale(1.02);
+        }
+
+        .collection-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transition: var(--transition);
+        }
+
+        .collection-item:hover .collection-bg {
+            transform: scale(1.1);
+        }
+
+        .collection-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2.5rem;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+
+        .collection-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .collection-desc {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .collection-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .collection-cta:hover {
+            gap: 1rem;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            background: var(--light-gray);
+        }
+
+        .testimonials-slider {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding: 2rem 0;
+            scrollbar-width: none;
+        }
+
+        .testimonials-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        .testimonial-card {
+            min-width: 400px;
+            background: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            scroll-snap-align: start;
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+
+        .testimonial-rating {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin-bottom: 0.3rem;
+        }
+
+        .author-info p {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--primary);
+            color: #fff;
+            padding: 5rem 5%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 4rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .stat-number {
+            font-size: clamp(3rem, 6vw, 4.5rem);
+            font-weight: 900;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: #ccc;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        /* Newsletter */
+        .newsletter-section {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d2d 100%);
+            color: #fff;
+            padding: 6rem 5%;
+            text-align: center;
+        }
+
+        .newsletter-form {
+            max-width: 600px;
+            margin: 3rem auto 0;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 280px;
+            padding: 1.2rem 2rem;
+            border: 2px solid rgba(255,255,255,0.3);
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            color: #fff;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .newsletter-btn {
+            padding: 1.2rem 3rem;
+            background: var(--secondary);
+            color: var(--primary);
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 2px;
+        }
+
+        .newsletter-btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,255,255,0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-content {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(3, 1fr);
+            gap: 4rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            letter-spacing: 5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-brand p {
+            color: #999;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .social-btn:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            border-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .footer-section h4 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1a1a1a;
+            padding-top: 2rem;
+            text-align: center;
+            color: #666;
+        }
+
+        /* About Page */
+        .about-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d2d 100%);
+            color: #fff;
+            padding: 10rem 5% 6rem;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .about-content-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+            margin-bottom: 6rem;
+        }
+
+        .about-image-placeholder {
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .about-text p {
+            color: #666;
+            line-height: 1.9;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .value-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        /* Contact Page */
+        .contact-hero {
+            background: linear-gradient(135deg, var(--primary) 0%, #2d2d2d 100%);
+            color: #fff;
+            padding: 10rem 5% 6rem;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+
+        .contact-form {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--secondary);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 2px;
+        }
+
+        .submit-btn:hover {
+            background: var(--secondary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-card {
+            background: var(--light-gray);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--secondary);
+        }
+
+        .contact-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .contact-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: rgba(255, 255, 255, 0.98);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                transition: left 0.4s;
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(45deg) translate(8px, 8px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(-45deg) translate(7px, -7px);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-content-section,
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+
+            .collection-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                min-width: 300px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .newsletter-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-text">VITAN</div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <nav>
+            <div class="logo" onclick="navigateTo('home')">VITAN</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#" onclick="navigateTo('home')" class="active">Home</a></li>
+                <li><a href="#" onclick="navigateTo('shop')">Shop</a></li>
+                <li><a href="#" onclick="navigateTo('collections')">Collections</a></li>
+                <li><a href="#" onclick="navigateTo('about')">About</a></li>
+                <li><a href="#" onclick="navigateTo('contact')">Contact</a></li>
+            </ul>
+            <div class="nav-right">
+                <button class="icon-btn">🔍</button>
+                <button class="icon-btn">
+                    🛒
+                    <span class="cart-count">0</span>
+                </button>
+                <div class="menu-toggle" id="menuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Home Page -->
+    <div id="home" class="page active">
+        <!-- Hero -->
+        <section class="hero">
+            <div class="hero-background"></div>
+            <div class="hero-particles">
+                <div class="particle" style="width:4px;height:4px;left:10%;top:20%;animation-delay:0s"></div>
+                <div class="particle" style="width:6px;height:6px;left:80%;top:30%;animation-delay:2s"></div>
+                <div class="particle" style="width:3px;height:3px;left:50%;top:50%;animation-delay:4s"></div>
+                <div class="particle" style="width:5px;height:5px;left:20%;top:70%;animation-delay:1s"></div>
+                <div class="particle" style="width:4px;height:4px;left:70%;top:60%;animation-delay:3s"></div>
+            </div>
+            <div class="hero-content">
+                <h1>VITAN</h1>
+                <p class="hero-subtitle">REDEFINING LUXURY FASHION</p>
+                <div class="cta-group">
+                    <a href="#" onclick="navigateTo('shop')" class="cta-btn primary">SHOP NOW</a>
+                    <a href="#" onclick="navigateTo('collections')" class="cta-btn secondary">VIEW COLLECTIONS</a>
+                </div>
+            </div>
+            <div class="scroll-indicator">
+                <span>↓</span>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section>
+            <div class="section-header">
+                <p class="section-subtitle">WHY CHOOSE US</p>
+                <h2 class="section-title">Excellence in Every Detail</h2>
+                <p class="section-description">We combine timeless craftsmanship with contemporary design to create pieces that define luxury</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✨</div>
+                    <h3>Premium Quality</h3>
+                    <p>Handcrafted with the finest materials sourced from around the world, ensuring unparalleled quality and durability.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Global Presence</h3>
+                    <p>Trusted by discerning customers in over 80 countries, with flagship stores in major fashion capitals.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Exclusive Designs</h3>
+                    <p>Limited edition collections designed by world-renowned fashion artists, making each piece truly unique.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">♻️</div>
+                    <h3>Sustainable</h3>
+                    <p>Committed to ethical fashion with eco-friendly materials and sustainable manufacturing processes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💎</div>
+                    <h3>Lifetime Warranty</h3>
+                    <p>We stand behind our craftsmanship with comprehensive warranty coverage on all premium pieces.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h3>Fast Delivery</h3>
+                    <p>Express shipping worldwide with white-glove delivery service for high-value items.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Products -->
+        <section class="products-section">
+            <div class="section-header">
+                <p class="section-subtitle">TRENDING NOW</p>
+                <h2 class="section-title">Featured Collection</h2>
+                <p class="section-description">Discover our most sought-after pieces of the season</p>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">New Arrivals</button>
+                <button class="filter-btn">Best Sellers</button>
+                <button class="filter-btn">On Sale</button>
+            </div>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <span class="product-badge">NEW</span>
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">APPAREL</div>
+                        <h3 class="product-name">Signature Blazer</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(248)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$599</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <span class="product-badge">SALE</span>
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">ACCESSORIES</div>
+                        <h3 class="product-name">Leather Handbag</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(532)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$899</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <span class="product-badge">TRENDING</span>
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">FOOTWEAR</div>
+                        <h3 class="product-name">Designer Sneakers</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(892)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$449</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">WATCHES</div>
+                        <h3 class="product-name">Luxury Timepiece</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(345)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$1,299</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);">
+                        <span class="product-badge">LIMITED</span>
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">JEWELRY</div>
+                        <h3 class="product-name">Gold Necklace</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(127)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$799</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">EYEWEAR</div>
+                        <h3 class="product-name">Designer Sunglasses</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(623)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$349</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <div class="section-header">
+                <p class="section-subtitle">TESTIMONIALS</p>
+                <h2 class="section-title">What Our Clients Say</h2>
+                <p class="section-description">Join thousands of satisfied customers worldwide</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"VITAN has completely transformed my wardrobe. The quality is exceptional, and the designs are absolutely stunning. Worth every penny!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>Fashion Blogger</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"I've been a loyal customer for 3 years. The attention to detail and customer service is unmatched in the industry."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JD</div>
+                        <div class="author-info">
+                            <h4>James Davidson</h4>
+                            <p>Business Executive</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"The perfect blend of elegance and comfort. VITAN understands what modern luxury truly means."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">EC</div>
+                        <div class="author-info">
+                            <h4>Emily Chen</h4>
+                            <p>Interior Designer</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">★★★★★</div>
+                    <p class="testimonial-text">"Sustainable fashion at its finest. I love that I can look good while supporting ethical practices."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Michael Roberts</h4>
+                            <p>Environmental Activist</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-number">80+</span>
+                    <p class="stat-label">Countries Worldwide</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1M+</span>
+                    <p class="stat-label">Happy Customers</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <p class="stat-label">Product Lines</p>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15</span>
+                    <p class="stat-label">Years of Excellence</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter -->
+        <section class="newsletter-section">
+            <div class="section-header">
+                <h2 class="section-title" style="color: #fff;">Stay Updated</h2>
+                <p class="section-description" style="color: rgba(255,255,255,0.8);">Subscribe to receive exclusive offers and new collection alerts</p>
+            </div>
+            <form class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+                <button type="submit" class="newsletter-btn">SUBSCRIBE</button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Shop Page -->
+    <div id="shop" class="page">
+        <section class="about-hero">
+            <h1 class="section-title" style="color: #fff;">Shop All Collections</h1>
+            <p class="section-description" style="color: rgba(255,255,255,0.9);">Discover our complete range of premium products</p>
+        </section>
+
+        <section class="products-section">
+            <div class="filter-tabs">
+                <button class="filter-btn active">All Products</button>
+                <button class="filter-btn">Men</button>
+                <button class="filter-btn">Women</button>
+                <button class="filter-btn">Accessories</button>
+                <button class="filter-btn">Footwear</button>
+                <button class="filter-btn">Sale</button>
+            </div>
+            <div class="products-grid">
+                <!-- Repeat product cards -->
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <span class="product-badge">NEW</span>
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">MEN'S WEAR</div>
+                        <h3 class="product-name">Premium Suit</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(156)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$1,299</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">WOMEN'S WEAR</div>
+                        <h3 class="product-name">Evening Dress</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(289)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$899</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <span class="product-badge">SALE</span>
+                        <div class="product-overlay">
+                            <div class="quick-actions">
+                                <button class="action-btn">Quick View</button>
+                                <button class="action-btn">❤️</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">ACCESSORIES</div>
+                        <h3 class="product-name">Leather Wallet</h3>
+                        <div class="product-rating">
+                            <span class="stars">★★★★★</span>
+                            <span class="rating-count">(445)</span>
+                        </div>
+                        <div class="product-price-row">
+                            <span class="product-price">$199</span>
+                            <button class="add-to-cart">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Collections Page -->
+    <div id="collections" class="page">
+        <section class="collection-showcase">
+            <div class="section-header">
+                <p class="section-subtitle" style="color: var(--secondary);">EXCLUSIVE</p>
+                <h2 class="section-title" style="color: #fff;">Our Collections</h2>
+                <p class="section-description" style="color: rgba(255,255,255,0.8);">Curated collections for every occasion and style</p>
+            </div>
+            <div class="collection-grid">
+                <div class="collection-item">
+                    <div class="collection-bg"></div>
+                    <div class="collection-content">
+                        <h3 class="collection-title">Summer Essentials</h3>
+                        <p class="collection-desc">Light, breezy pieces for the warm season</p>
+                        <a href="#" class="collection-cta">Explore Now →</a>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <div class="collection-bg" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="collection-content">
+                        <h3 class="collection-title">Business Elite</h3>
+                        <p class="collection-desc">Professional attire for modern executives</p>
+                        <a href="#" class="collection-cta">Explore Now →</a>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <div class="collection-bg" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                    <div class="collection-content">
+                        <h3 class="collection-title">Casual Luxe</h3>
+                        <p class="collection-desc">Elevated everyday wear</p>
+                        <a href="#" class="collection-cta">Explore Now →</a>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <div class="collection-bg" style="background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);"></div>
+                    <div class="collection-content">
+                        <h3 class="collection-title">Evening Elegance</h3>
+                        <p class="collection-desc">Sophisticated pieces for special occasions</p>
+                        <a href="#" class="collection-cta">Explore Now →</a>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <div class="collection-bg" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+                    <div class="collection-content">
+                        <h3 class="collection-title">Accessories Bar</h3>
+                        <p class="collection-desc">Complete your look with premium accessories</p>
+                        <a href="#" class="collection-cta">Explore Now →</a>
+                    </div>
+                </div>
+                <div class="collection-item">
+                    <div class="collection-bg" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);"></div>
+                    <div class="collection-content">
+                        <h3 class="collection-title">Seasonal Limited</h3>
+                        <p class="collection-desc">Exclusive limited edition pieces</p>
+                        <a href="#" class="collection-cta">Explore Now →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page">
+        <section class="about-hero">
+            <h1 class="section-title" style="color: #fff;">About VITAN</h1>
+            <p class="section-description" style="color: rgba(255,255,255,0.9);">Crafting luxury fashion since 2010</p>
+        </section>
+
+        <section>
+            <div class="about-content-section">
+                <div class="about-image-placeholder">OUR STORY</div>
+                <div class="about-text">
+                    <h2>The VITAN Legacy</h2>
+                    <p>Founded in 2010, VITAN emerged from a vision to redefine luxury fashion for the modern era. Our founder, inspired by the intersection of traditional craftsmanship and contemporary design, set out to create a brand that would stand the test of time.</p>
+                    <p>Today, VITAN represents the pinnacle of fashion excellence, with flagship stores in Paris, Milan, New York, and Tokyo. Our commitment to quality, sustainability, and timeless design has earned us recognition as one of the world's leading premium fashion houses.</p>
+                    <p>Every piece in our collection is a testament to our dedication to perfection, combining the finest materials with meticulous attention to detail.</p>
+                </div>
+            </div>
+
+            <div class="about-content-section" style="margin-top: 4rem;">
+                <div class="about-text">
+                    <h2>Our Philosophy</h2>
+                    <p>At VITAN, we believe that true luxury is timeless. Our philosophy centers on creating pieces that transcend fleeting trends, offering enduring elegance that can be cherished for generations.</p>
+                    <p>We are committed to sustainable practices, ethical sourcing, and supporting artisan communities worldwide. Each purchase supports our mission to create a more sustainable fashion industry.</p>
+                    <p>Our design process involves extensive research, prototyping, and refinement to ensure that every product meets our exacting standards.</p>
+                </div>
+                <div class="about-image-placeholder">OUR PHILOSOPHY</div>
+            </div>
+        </section>
+
+        <section>
+            <div class="section-header">
+                <p class="section-subtitle">OUR VALUES</p>
+                <h2 class="section-title">What Drives Us</h2>
+            </div>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🎯</div>
+                    <h3>Excellence</h3>
+                    <p>Uncompromising quality in every stitch, every detail, every piece we create.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3>Sustainability</h3>
+                    <p>Ethical practices and environmental responsibility guide all our decisions.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">💡</div>
+                    <h3>Innovation</h3>
+                    <p>Constantly pushing boundaries while respecting timeless design principles.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Integrity</h3>
+                    <p>Transparency and honesty in our relationships with customers and partners.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page">
+        <section class="contact-hero">
+            <h1 class="section-title" style="color: #fff;">Get In Touch</h1>
+            <p class="section-description" style="color: rgba(255,255,255,0.9);">We'd love to hear from you</p>
+        </section>
+
+        <section>
+            <div class="contact-content">
+                <div class="contact-form">
+                    <h2 style="margin-bottom: 2rem; color: var(--primary);">Send us a Message</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone">
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">SEND MESSAGE</button>
+                    </form>
+                </div>
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3>📍 Visit Us</h3>
+                        <p><strong>Headquarters</strong><br>123 Fashion Avenue<br>New York, NY 10001<br>United States</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>📞 Call Us</h3>
+                        <p><strong>Customer Service</strong><br>+1 (800) 123-4567<br><br><strong>Business Inquiries</strong><br>+1 (800) 765-4321</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>✉️ Email Us</h3>
+                        <p><strong>General</strong><br>info@vitan.com<br><br><strong>Support</strong><br>support@vitan.com</p>
+                    </div>
+                    <div class="contact-card">
+                        <h3>🕒 Business Hours</h3>
+                        <p>Monday - Friday: 9AM - 8PM<br>Saturday: 10AM - 6PM<br>Sunday: 11AM - 5PM<br>(EST)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>VITAN</h3>
+                    <p>Redefining luxury fashion with timeless elegance and sustainable practices. Join us in our journey towards a more beautiful and responsible future.</p>
+                    <div class="social-links">
+                        <div class="social-btn">f</div>
+                        <div class="social-btn">t</div>
+                        <div class="social-btn">i</div>
+                        <div class="social-btn">in</div>
+                        <div class="social-btn">p</div>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Men's Collection</a></li>
+                        <li><a href="#">Women's Collection</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Footwear</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Store Locator</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Track Order</a></li>
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 VITAN. All rights reserved. | <a href="#" style="color: #666; text-decoration: none;">Privacy Policy</a> | <a href="#" style="color: #666; text-decoration: none;">Terms of Service</a> | <a href="#" style="color: #666; text-decoration: none;">Accessibility</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Performance optimized navigation system using efficient data structures
+        const state = {
+            currentPage: 'home',
+            cartCount: 0,
+            pages: ['home', 'shop', 'collections', 'about', 'contact']
+        };
+
+        // Loader - hide after page load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Header scroll effect - throttled for performance
+        let lastScroll = 0;
+        let ticking = false;
+
+        window.addEventListener('scroll', () => {
+            lastScroll = window.scrollY;
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const header = document.getElementById('header');
+                    if (lastScroll > 100) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Navigation system - O(1) page switching
+        function navigateTo(pageId) {
+            if (!state.pages.includes(pageId)) return;
+            
+            // Update state
+            state.currentPage = pageId;
+            
+            // Hide all pages
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            // Show target page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Update nav links
+            const links = document.querySelectorAll('.nav-links a');
+            links.forEach(link => link.classList.remove('active'));
+            event?.target?.classList?.add('active');
+            
+            // Close mobile menu
+            document.getElementById('navLinks').classList.remove('active');
+            document.getElementById('menuToggle').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Mobile menu toggle
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            this.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('active');
+        });
+
+        // Filter functionality - efficient event delegation
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                const parent = e.target.parentElement;
+                parent.querySelectorAll('.filter-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                e.target.classList.add('active');
+                
+                // Here you would filter products
+                console.log('Filter:', e.target.textContent);
+            }
+        });
+
+        // Add to cart functionality - O(1) operation
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('add-to-cart')) {
+                state.cartCount++;
+                document.querySelector('.cart-count').textContent = state.cartCount;
+                
+                // Visual feedback
+                e.target.textContent = '✓ Added';
+                e.target.style.background = 'var(--secondary)';
+                e.target.style.color = 'var(--primary)';
+                
+                setTimeout(() => {
+                    e.target.textContent = 'Add to Cart';
+                    e.target.style.background = '';
+                    e.target.style.color = '';
+                }, 2000);
+            }
+        });
+
+        // Newsletter form
+        document.querySelector('.newsletter-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const input = e.target.querySelector('input');
+            const btn = e.target.querySelector('button');
+            
+            btn.textContent = 'SUBSCRIBED ✓';
+            btn.style.background = '#fff';
+            btn.style.color = 'var(--primary)';
+            
+            setTimeout(() => {
+                input.value = '';
+                btn.textContent = 'SUBSCRIBE';
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 3000);
+        });
+
+        // Contact form
+        const contactForm = document.querySelector('.contact-form form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const btn = e.target.querySelector('.submit-btn');
+                
+                btn.textContent = 'SENDING...';
+                btn.disabled = true;
+                
+                setTimeout(() => {
+                    btn.textContent = 'MESSAGE SENT ✓';
+                    btn.style.background = 'var(--secondary)';
+                    
+                    setTimeout(() => {
+                        e.target.reset();
+                        btn.textContent = 'SEND MESSAGE';
+                        btn.style.background = '';
+                        btn.disabled = false;
+                    }, 3000);
+                }, 1500);
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                const href = this.getAttribute('href');
+                if (href !== '#' && document.querySelector(href)) {
+                    e.preventDefault();
+                    document.querySelector(href).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations - efficient lazy loading
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.feature-card, .product-card, .collection-item, .testimonial-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect for hero - RequestAnimationFrame for smooth performance
+        let parallaxTicking = false;
+        window.addEventListener('scroll', () => {
+            if (!parallaxTicking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.pageYOffset;
+                    const parallaxElements = document.querySelectorAll('.hero-background');
+                    parallaxElements.forEach(el => {
+                        el.style.transform = `translateY(${scrolled * 0.5}px)`;
+                    });
+                    parallaxTicking = false;
+                });
+                parallaxTicking = true;
+            }
+        });
+
+        // Testimonial slider auto-scroll with touch support
+        const sliders = document.querySelectorAll('.testimonials-slider');
+        sliders.forEach(slider => {
+            let isDown = false;
+            let startX;
+            let scrollLeft;
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            // Auto-scroll
+            let scrollInterval = setInterval(() => {
+                if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth) {
+                    slider.scrollLeft = 0;
+                } else {
+                    slider.scrollLeft += 1;
+                }
+            }, 30);
+
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(scrollInterval);
+            });
+
+            slider.addEventListener('mouseleave', () => {
+                scrollInterval = setInterval(() => {
+                    if (slider.scrollLeft >= slider.scrollWidth - slider.clientWidth) {
+                        slider.scrollLeft = 0;
+                    } else {
+                        slider.scrollLeft += 1;
+                    }
+                }, 30);
+            });
+        });
+
+        // Product quick view modal preparation (efficient DOM caching)
+        const productCache = new Map();
+        
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('action-btn') && e.target.textContent === 'Quick View') {
+                const productCard = e.target.closest('.product-card');
+                const productName = productCard.querySelector('.product-name').textContent;
+                console.log('Quick view:', productName);
+                // Modal implementation would go here
+            }
+        });
+
+        // Wishlist functionality
+        const wishlist = new Set();
+        
+        document.addEventListener('click', (e) => {
+            if (e.target.textContent === '❤️') {
+                const productCard = e.target.closest('.product-card');
+                const productName = productCard?.querySelector('.product-name')?.textContent;
+                
+                if (productName) {
+                    if (wishlist.has(productName)) {
+                        wishlist.delete(productName);
+                        e.target.style.color = '';
+                    } else {
+                        wishlist.add(productName);
+                        e.target.style.color = '#f5576c';
+                    }
+                    console.log('Wishlist:', Array.from(wishlist));
+                }
+            }
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('navLinks').classList.remove('active');
+                document.getElementById('menuToggle').classList.remove('active');
+            }
+        });
+
+        // Search functionality placeholder
+        document.querySelectorAll('.icon-btn').forEach(btn => {
+            if (btn.textContent.includes('🔍')) {
+                btn.addEventListener('click', () => {
+                    console.log('Search clicked');
+                    // Search modal would open here
+                });
+            }
+        });
+
+        // Performance monitoring
+        window.addEventListener('load', () => {
+            if ('performance' in window) {
+                const perfData = window.performance.timing;
+                const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                console.log(`Page load time: ${pageLoadTime}ms`);
+            }
+        });
+
+        // Lazy load images (would be used with actual images)
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            imageObserver.unobserve(img);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Debounce function for resize events
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Responsive handling
+        const handleResize = debounce(() => {
+            const width = window.innerWidth;
+            console.log('Window resized:', width);
+            // Responsive adjustments would go here
+        }, 250);
+
+        window.addEventListener('resize', handleResize);
+
+        // Prefetch navigation pages for instant loading
+        const prefetchPages = () => {
+            state.pages.forEach(pageId => {
+                const page = document.getElementById(pageId);
+                if (page && !page.classList.contains('active')) {
+                    // Pages are already in DOM, just ensure they're ready
+                    page.style.willChange = 'opacity';
+                }
+            });
+        };
+
+        // Call prefetch after initial load
+        setTimeout(prefetchPages, 2000);
+
+        // Service Worker registration for PWA capabilities (if needed)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                // Service worker code would go here for offline support
+                console.log('Ready for service worker registration');
+            });
+        }
+    </script>
+</body>
+</html>
